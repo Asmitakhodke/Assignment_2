@@ -1,326 +1,321 @@
-{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
-{\colortbl ;\red255\green0\blue0;}
-{\*\generator Riched20 6.3.9600}\viewkind4\uc1 
-\pard\sa200\sl276\slmult1\f0\fs22\lang9 /******************************************************************************\par
+/******************************************************************************
 
-\pard\sa200\sl276\slmult1\qc\cf1\b\fs32 SLOT BOOKING SERVICE PROGRAM CODE (C Program)\par
+                 SLOT BOOKING SERVICE PROGRAM CODE (C Program)
 
-\pard\sa200\sl276\slmult1\cf0\b0\fs22 *******************************************************************************/\par
-#include<stdio.h>\par
-#include<stdlib.h>\par
-#include<string.h>\par
-struct book\par
-\{\par
-\tab char code[20];\par
-\tab char name[20];\par
-\tab char date[20];\par
-\tab int cost;\par
-\}b;\par
-int slot;\par
-void insert_details();                                                                   //for inserting slot details\par
-void viewAll();                                                                               // for view all slots \par
-void find();                                                                                      // for finding data\par
-void book_slot();                                                                          //for booking slots\par
-void old_record();                                                          //for view old recorrds of users,booked tickets\par
-void main()\par
-\{\par
-                int a;\par
- \tab do\{\par
-\tab printf("\\n====================================================================");\par
-\tab printf("\\n");\tab\par
-\tab printf("\\t slot booking ");\par
-\tab printf("\\n");\par
-\tab printf("\\n====================================================================");\par
-\tab printf("\\nPress <1> Insert allslots");\par
-   \tab printf("\\nPress <2> View All slots");\par
-\tab printf("\\nPress <3> Find Slot ");\par
-\tab printf("\\nPress <4> Book Slot");\par
-\tab printf("\\nPress <5> View All Bookings");\par
-   \tab printf("\\nPress <0> Exit ");\par
-                printf("\\nEnter your Choice ::");\par
-   \tab scanf("%d",&a); \tab\par
-               switch (a)\par
-   \tab\{\par
-    \tab\tab case 1 :\par
-    \tab\tab insert_details();\par
-   \tab\tab break;\par
-\tab\tab case 2:\par
-    \tab\tab viewAll();\par
-   \tab\tab break;\par
-    \tab\tab case 3:\par
-    \tab\tab find();\par
-   \tab\tab break;\par
-                                case 4:\par
-\tab\tab book_slot();\par
-\tab\tab break;\par
-\tab\tab case 5:\par
-\tab\tab old_record();\par
-\tab\tab break;\par
-                                case 0:\par
-    \tab\tab exit(0);\par
-    \tab\tab break;\par
-                                default:\par
-    \tab\tab printf("Wrong choice !");\par
-    \tab\tab break;\par
-   \tab\}\par
- \}while(a!=0);\par
-\}\par
-void insert_details()\par
-\{\par
-\tab FILE *fp;\par
-\tab struct book b;\par
-\tab printf("Enter slot code :- ");\tab\par
-\tab scanf("%s",b.code);\par
-\tab printf("Enter name :- ");\tab\par
-\tab scanf("%s",b.name);\par
-\tab printf("Enter  Date:- ");\tab\par
-\tab scanf("%s",b.date);\par
-\tab printf("Enter  Price:- ");\tab\par
-\tab scanf("%d",&b.cost);\par
-\tab fp=fopen("data.txt","a");\par
-                if(fp == NULL)\par
-\tab\{\par
-\tab\tab printf("FIle not Found");\par
-\tab\}\par
-\tab else\par
-\tab\{\par
-\tab\tab fprintf(fp,"%s %s %s %d \\n",b.code,b.name,b.date,b.cost);\par
-\tab\tab printf("Record insert Sucessfull");\par
-\tab\}\par
-\tab\tab printf("\\n");\par
-\tab fclose(fp);\par
-\}\par
-void find()                                                                                                                    //find details\par
-\{\par
-\tab struct book b;\par
-\tab FILE *fp;\par
-\tab char a[20];\par
-\tab printf("Enter slot code :");\par
-\tab scanf("%s",a);\par
-\tab fp = fopen("data.txt","r");\par
-\tab if(fp == NULL)\par
-\tab\{\par
-\tab\tab printf("file does not found !");\par
-\tab\tab exit(1);\par
-               \}\par
-\tab else\par
-\tab\{\tab\par
-\tab\tab while(getc(fp) != EOF)\par
-\tab\tab\{\par
-\tab\tab\tab fscanf(fp,"%s %s %s %d",b.code,b.name,b.date,&b.cost);\par
-\tab\tab\tab if(strcmp(b.code,a) == 0)\par
-\tab\tab\tab\{\tab\par
-\tab\tab\tab\tab //printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);\par
-\tab\tab\tab\tab printf("\\n Record Found\\n");\par
-\tab\tab\tab\tab printf("\\n\\t\\tCode ::%s",b.code);\par
-\tab\tab\tab\tab printf("\\n\\t\\tslot name ::%s",b.name);\par
-\tab\tab\tab\tab printf("\\n\\t\\tslot date ::%s",b.date);\par
-\tab\tab\tab\tab printf("\\n\\t\\tprice  ::%d",b.cost);\par
-\tab\tab\tab\tab break;\par
-\tab\tab\tab\}\par
-\tab\tab\}\par
-\tab\}\par
-      fclose(fp);\par
-\}\par
-void viewAll()\par
-\{\par
-\tab char ch;\par
-\tab FILE *fp;\par
-               fp = fopen("data.txt","r");\par
-\tab if(fp == NULL)\par
-\tab\{\par
-\tab\tab printf("file does not found !");\par
-\tab\tab exit(1);\par
-               \}\par
-\tab else\par
-\tab\{\tab\par
-\tab\tab system("clear");\par
-\tab\tab while( ( ch = fgetc(fp) ) != EOF )\par
-      \tab\tab printf("%c",ch);\par
-\tab\}\par
-\tab fclose(fp);\par
-\}\par
-//for slot booking \par
-void book_slot()\par
-\{\par
- struct book b;\par
-\tab FILE *fp;\par
-                FILE *ufp;\par
-                int total_slot,mobile,total_amount;\par
-\tab char name[20];\par
-                 char a;                                    //used in display all slots\par
-\tab char slot_code[20];           //for searching\par
-\par
-\tab // disply all slots by default for movie code\par
-\tab fp = fopen("data.txt","r");\par
-\tab if(fp == NULL)\par
-\tab\{\par
-\tab\tab printf("file does not found !");\par
-\tab\tab exit(1);\par
-               \}\par
-\tab else\par
-\tab\{\tab\par
-\tab\tab system("cls");\par
-\tab\tab while( ( a = fgetc(fp) ) != EOF )\par
-      \tab\tab printf("%c",a);\par
-\tab\}\par
-\tab fclose(fp);\par
-\tab //display ends\par
-\tab printf("\\n For Booking Choice (Enter Code First Letter or number)\\n");\par
-\tab printf("\\n Enter slot code :");\par
-\tab scanf("%s",slot_code);\par
-\tab //system("clear");\par
-\tab fp = fopen("data.txt","r");\par
-\tab if(fp == NULL)\par
-\tab\{\par
-\tab\tab printf("file does not found !");\par
-\tab\tab exit(1);\par
-                \}\par
-\tab else\par
-\tab\{\tab\par
-\tab\tab while(getc(fp) != EOF)\par
-\tab\tab\{\par
-\tab\tab\tab fscanf(fp,"%s %s %s %d",b.code,b.name,b.date,&b.cost);\par
-\tab\tab\tab if(strcmp(b.code,slot_code) == 0)\par
-\tab\tab\tab\{\tab\par
-\tab\tab\tab\tab //printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);\par
-\tab\tab\tab\tab printf("\\n Record Found\\n");\par
-\tab\tab\tab\tab printf("\\n\\t\\tCode ::%s",b.code);\par
-\tab\tab\tab\tab printf("\\n\\t\\tslot name ::%s",b.name);\par
-\tab\tab\tab\tab printf("\\n\\t\\tdate name ::%s",b.date);\par
-\tab\tab\tab\tab printf("\\n\\t\\tPrice ::%d",b.cost);\par
-\tab\tab\tab\}\par
-\tab\tab\}\par
-\tab\}\par
-\tab printf("\\n* Fill Details  *");\par
-\tab printf("\\n your name :");\par
-\tab scanf("%s",name);\par
-\tab printf("\\n mobile number :");\par
-\tab scanf("%d",&mobile);\par
-\tab printf("\\n Total number of slots :");\par
-\tab scanf("%d",&total_slot);\par
-\tab total_amount = b.cost * total_slot;\par
-\tab printf("\\n ***** ENJOY SLOT BOOKING ****\\n");\par
-\tab printf("\\n\\t\\tname : %s",name);\par
-\tab printf("\\n\\t\\tmobile Number : %d",mobile);\par
-\tab printf("\\n\\t\\tslot name : %s",b.name);\par
-\tab printf("\\n\\t\\tTotal slots : %d",total_slot);\par
-\tab printf("\\n\\t\\tcost per slot : %d",b.cost);\par
-\tab printf("\\n\\t\\tTotal Amount : %d",total_amount);\par
-\tab ufp=fopen("oldBookings.txt","a");\par
-\tab if(ufp == NULL)\par
-\tab\{\par
-\tab\tab printf("FIle not Found");\par
-\tab\}\par
-\tab else\par
-\tab\{\par
-\tab\tab fprintf(ufp,"%s %d %d %d %s %d \\n",name,mobile,total_slot,total_amount,b.name,b.cost);\par
-\tab\tab printf("\\n Record insert Sucessfull to the old record file");\par
-\tab\}\par
-\tab\tab printf("\\n");\par
-\tab fclose(ufp);\par
-\tab fclose(fp);\par
-\}\par
-//for view all user Booking\par
-void old_record()\par
-\{\par
-\tab char ch;\par
-\tab FILE *fp;\par
-//system("clear");\par
-\tab fp = fopen("oldBookings.txt","r");\par
-\tab if(fp == NULL)\par
-\tab\{\par
-\tab\tab printf("file does not found !");\par
-\tab\tab exit(1);\par
-                \}\par
-\tab else\par
-              \{\tab\par
-                                system("clear");\par
-\tab\tab while( ( ch = fgetc(fp) ) != EOF )\par
-      \tab\tab printf("%c",ch);\par
-\tab\}\par
-\tab fclose(fp);\par
-\}\par
-\ul OUTPUT\ulnone :1)Enter Slot code ex:   12:00-1:00\par
-                  2)Give name of slot:     India\par
-                  3)Enter date              :     14/06/20\par
-                  4)Price of booking  :      2\par
-/******************************************************************************\par
-
-\pard\sa200\sl276\slmult1\qc\cf1\b\fs32 C program to print CALENDER OF GIVEN YEAR\par
-
-\pard\sa200\sl276\slmult1\cf0\b0\fs22 *******************************************************************************/\par
-#include <stdio.h>\par
-#include <stdlib.h>\par
-int frst_DayOfWeek(int yr)\par
-\{\par
-    int day;\par
-    day = (((yr - 1) * 365) + ((yr - 1) / 4) - ((yr - 1) / 100) + ((yr) / 400) + 1) % 7;\par
-    return day;\par
-\}\par
-int main()\par
-\{\par
-    int yr,day=0,dayInMonth,weekDay=0,startingDay,month;\par
-    printf("Enter your desired year: ");\par
-    scanf("%d",&yr);\par
-   char*months[]=\{"January","February","March","April","May","June","July","August","September","October","November","December"\};\par
-    int monthDays[]=\{31,28,31,30,31,30,31,31,30,31,30,31\};\par
-    if((yr%4==0  &&  yr%100!=0)  ||  yr%400==0)\par
-    \{\par
-        monthDays[1]=29;\par
-    \}\par
-    startingDay=frst_DayOfWeek(yr);\par
-    for(month=0;month<12;month++)\par
-    \{\par
-        dayInMonth=monthDays[month]+1;\par
-        printf("\\n\\n------------------%s----------------",months[month]);\par
-        printf("\\n  Sun   Mon  Tue  Wed  Thurs Fri  Sat\\n");\par
-        for(weekDay=0;weekDay<startingDay;weekDay++)\par
-        \{\par
-           printf("     ");\par
-        \}\par
-        for(day=1;day<dayInMonth;day++)\par
-        \{\par
-            printf("%5d",day);\par
-            if(++weekDay>6)\par
-            \{\par
-                printf("\\n");\par
-                weekDay=0;\par
-            \}\par
-            startingDay=weekDay;\par
-        \}\par
-    \}\par
-\}\par
-
-\pard\sa200\sl276\slmult1\qc\cf1\b\fs36 Python Code to find meeting time slots where all participants are available\fs40\par
-
-\pard\sa200\sl276\slmult1\cf0\b0\fs24 user_1 = ["4-16","18-24"]\par
-user_2 = ["2-14","17-24"]\par
-user_3 = ["6-8","12-20"]\par
-user_4 = ["10-22"]\par
-allPeople = [user_1, user_2, user_3, user_4]\par
-allTimeSlots = []\par
-for j in range(0,24):\par
-    allTimeSlots.append(str(j) + "-" + str(j+1))\par
-commonFreeSlots = []\par
-for j in range(0,len(allTimeSlots)):\par
-    timeSlotOk = True\par
-    for k in range(0,len(allPeople)):\par
-        person_free_slots = parseSlot(allPeople[k])\par
-        if allTimeSlots[j] not in person_free_slots:\par
-            timeSlotOk = False\par
-            break\par
-    if timeSlotOk:\par
-        commonFreeSlots.append(allTimeSlots[j])\par
-def parseSlot(list_of_slots):\par
-    result = []\par
-    for j in range(0,len(list_of_slots)):\par
-        start_time = int(list_of_slots[j].split("-")[0])\par
-        end_time = int(list_of_slots[j].split("-")[1])\par
-        k = 0\par
-        while (start_time + k) < end_time:\par
-            result.append(str(start_time+k) + "-" + str(start_time+k+1))\par
-            k += 1\par
-    return result\par
+*******************************************************************************/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+struct book
+{
+  char code[20];
+  char name[20];
+  char date[20];
+  int cost;
+  }b;
+int slot;
+void insert_details();                                                      //for inserting slot details
+void viewAll();                                                             // for view all slots
+void find();                                                                // for finding data
+void book_slot();                                                           //for booking slots
+void old_record();                                                          //for view old recorrds of users,booked
+void main()
+{
+    int a;
+ {
+ printf("\\n====================================================================");
+ printf("\\n");
+ printf("\\t slot booking ");
+ printf("\\n");
+ printf("\\n====================================================================");
+ printf("\\nPress <1> Insert allslots");
+ printf("\\nPress <2> View All slots");
+ printf("\\nPress <3> Find Slot ");
+ printf("\\nPress <4> Book Slot");
+ printf("\\nPress <5> View All Bookings");
+ printf("\\nPress <0> Exit ");
+ printf("\\nEnter your Choice ::");
+ scanf("%d",&a);
+     switch (a)
+   {
+     case 1 :
+      insert_details();
+     break;
+     case 2:
+     viewAll();
+     break;
+     case 3:
+     find();
+     break;
+     case 4:
+  book_slot();
+  break;
+  case 5:
+  old_record();
+  break;
+  case 0:
+    exit(0);
+   break;
+    default:
+   printf("Wrong choice !");
+   break;
+   }
+ }while(a!=0);
 }
- 
+void insert_details()
+{
+ FILE *fp;
+ struct book b;
+ printf("Enter slot code :- ");
+ scanf("%s",b.code);
+ printf("Enter name :- ");
+ scanf("%s",b.name);
+ printf("Enter  Date:- ");
+ scanf("%s",b.date);
+ printf("Enter  Price:- ");
+ scanf("%d",&b.cost);
+ fp=fopen("data.txt","a");
+      if(fp == NULL)
+{
+     printf("FIle not Found");
+}
+     else
+{
+     fprintf(fp,"%s %s %s %d \\n",b.code,b.name,b.date,b.cost);
+     printf("Record insert Sucessfull");
+}
+     printf("\\n");
+     fclose(fp);
+}
+void find()                                 //find details
+{
+ struct book b;
+ FILE *fp;
+ char a[20];
+ printf("Enter slot code :");
+ scanf("%s",a);
+ fp = fopen("data.txt","r");
+ if(fp == NULL)
+{
+ printf("file does not found !");
+ exit(1);
+ }
+ else
+{
+ while(getc(fp) != EOF)
+{
+ fscanf(fp,"%s %s %s %d",b.code,b.name,b.date,&b.cost);
+ if(strcmp(b.code,a) == 0)
+{
+ printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);
+ printf("\\n Record Found\\n");
+ printf("\\n\\t\\tCode ::%s",b.code);
+ printf("\\n\\t\\tslot name ::%s",b.name);
+ printf("\\n\\t\\tslot date ::%s",b.date);
+ printf("\\n\\t\\tprice  ::%d",b.cost);
+break;
+}
+}
+}
+      fclose(fp);
+}
+void viewAll()
+{
+ char ch;
+ FILE *fp;
+ fp = fopen("data.txt","r");
+ if(fp == NULL)
+{
+ printf("file does not found !");
+ exit(1);
+               }
+ else
+{
+ system("clear");
+ while( ( ch = fgetc(fp) ) != EOF )
+ printf("%c",ch);
+}
+ fclose(fp);
+}
+//for slot booking 
+void book_slot()
+{
+ struct book b;
+ FILE *fp;
+ FILE *ufp;
+ int total_slot,mobile,total_amount;
+ char name[20];
+ char a;                                    //used in display all slots
+ char slot_code[20];                        //for searching
+ // disply all slots by default for slot code
+ fp = fopen("data.txt","r");
+ if(fp == NULL)
+{
+ printf("file does not found !");
+ exit(1);
+ }
+ else
+{
+ system("cls");
+ while( ( a = fgetc(fp) ) != EOF )
+ printf("%c",a);
+}
+ fclose(fp);
+ //display ends
+ printf("\\n For Booking Choice (Enter Code First Letter or number)\\n");
+ printf("\\n Enter slot code :");
+ scanf("%s",slot_code);
+ //system("clear");
+ fp = fopen("data.txt","r");
+ if(fp == NULL)
+{
+ printf("file does not found !");
+ exit(1);
+ }
+ else
+{
+ while(getc(fp) != EOF)
+{
+ fscanf(fp,"%s %s %s %d",b.code,b.name,b.date,&b.cost);
+ if(strcmp(b.code,slot_code) == 0)
+{
+printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);
+ printf("\\n Record Found\\n");
+ printf("\\n\\t\\tCode ::%s",b.code);
+ printf("\\n\\t\\tslot name ::%s",b.name);
+ printf("\\n\\t\\tdate name ::%s",b.date);
+ printf("\\n\\t\\tPrice ::%d",b.cost);
+}
+}
+}
+ printf("\\n* Fill Details  *");
+ printf("\\n your name :");
+ scanf("%s",name);
+ printf("\\n mobile number :");
+ scanf("%d",&mobile);
+ printf("\\n Total number of slots :");
+ scanf("%d",&total_slot);
+ total_amount = b.cost * total_slot;
+ printf("\\n ***** ENJOY SLOT BOOKING ****\\n");
+ printf("\\n\\t\\tname : %s",name);
+ printf("\\n\\t\\tmobile Number : %d",mobile);
+ printf("\\n\\t\\tslot name : %s",b.name);
+ printf("\\n\\t\\tTotal slots : %d",total_slot);
+ printf("\\n\\t\\tcost per slot : %d",b.cost);
+ printf("\\n\\t\\tTotal Amount : %d",total_amount);
+ ufp=fopen("oldBookings.txt","a");
+ if(ufp == NULL)
+{
+ printf("FIle not Found");
+}
+ else
+{
+ fprintf(ufp,"%s %d %d %d %s %d \\n",name,mobile,total_slot,total_amount,b.name,b.cost);
+ printf("\\n Record insert Sucessfull to the old record file");
+}
+ printf("\\n");
+ fclose(ufp);
+ fclose(fp);
+}
+//for view all user Booking
+void old_record()
+{
+ char ch;
+ FILE *fp;
+//system("clear");
+ fp = fopen("oldBookings.txt","r");
+ if(fp == NULL)
+{
+ printf("file does not found !");
+ exit(1);
+ }
+ else
+{
+ system("clear");
+ while( ( ch = fgetc(fp) ) != EOF )
+ printf("%c",ch);
+}
+ fclose(fp);
+}
+ OUTPUT:          1)Enter Slot code ex:    12:00-1:00
+                  2)Give name of slot:     India
+                  3)Enter date:            14/06/20
+                  4)Price of booking :    2
+/******************************************************************************
+
+                          C program to print CALENDER OF GIVEN YEAR
+
+ *******************************************************************************/
+#include <stdio.h>
+#include <stdlib.h>\par
+int frst_DayOfWeek(int yr)
+{
+    int day;
+    day = (((yr - 1) * 365) + ((yr - 1) / 4) - ((yr - 1) / 100) + ((yr) / 400) + 1) % 7;
+    return day;
+}
+int main()
+{
+    int yr,day=0,dayInMonth,weekDay=0,startingDay,month;
+    printf("Enter your desired year: ");
+    scanf("%d",&yr);
+   char*months[]=\{"January","February","March","April","May","June","July","August","September","October","November","December"\};
+    int monthDays[]=\{31,28,31,30,31,30,31,31,30,31,30,31\};
+    if((yr%4==0  &&  yr%100!=0)  ||  yr%400==0)
+    {
+        monthDays[1]=29;
+    }
+    startingDay=frst_DayOfWeek(yr);
+    for(month=0;month<12;month++)
+    {
+        dayInMonth=monthDays[month]+1;
+        printf("\\n\\n------------------%s----------------",months[month]);
+        printf("\\n  Sun   Mon  Tue  Wed  Thurs Fri  Sat\\n");
+        for(weekDay=0;weekDay<startingDay;weekDay++)
+        {
+           printf("     ");
+        }
+        for(day=1;day<dayInMonth;day++)
+        {
+            printf("%5d",day);
+            if(++weekDay>6)
+            {
+                printf("\\n");
+                weekDay=0;
+            }
+            startingDay=weekDay;
+        }
+    }
+}
+
+ Python Code to find meeting time slots where all participants are available
+ 
+user_1 = ["4-16","18-24"]
+user_2 = ["2-14","17-24"]
+user_3 = ["6-8","12-20"]
+user_4 = ["10-22"]
+allPeople = [user_1, user_2, user_3, user_4]
+allTimeSlots = []
+for j in range(0,24):
+    allTimeSlots.append(str(j) + "-" + str(j+1))
+commonFreeSlots = []
+for j in range(0,len(allTimeSlots)):
+    timeSlotOk = True
+    for k in range(0,len(allPeople)):
+        person_free_slots = parseSlot(allPeople[k])
+        if allTimeSlots[j] not in person_free_slots:
+            timeSlotOk = False
+            break
+    if timeSlotOk:
+        commonFreeSlots.append(allTimeSlots[j])
+def parseSlot(list_of_slots):
+    result = []
+    for j in range(0,len(list_of_slots)):
+        start_time = int(list_of_slots[j].split("-")[0])
+        end_time = int(list_of_slots[j].split("-")[1])
+        k = 0
+        while (start_time + k) < end_time:
+            result.append(str(start_time+k) + "-" + str(start_time+k+1))
+            k += 1
+    return result
+}
