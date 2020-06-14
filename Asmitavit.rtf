@@ -18,23 +18,23 @@ void insert_details();                                                      //fo
 void viewAll();                                                             // for view all slots
 void find();                                                                // for finding data
 void book_slot();                                                           //for booking slots
-void old_record();                                                          //for view old recorrds of users,booked
+void old_record();                                                          //for view old records of users,booked
 void main()
 {
     int a;
- {
- printf("\\n====================================================================");
- printf("\\n");
- printf("\\t slot booking ");
- printf("\\n");
- printf("\\n====================================================================");
- printf("\\nPress <1> Insert allslots");
- printf("\\nPress <2> View All slots");
- printf("\\nPress <3> Find Slot ");
- printf("\\nPress <4> Book Slot");
- printf("\\nPress <5> View All Bookings");
- printf("\\nPress <0> Exit ");
- printf("\\nEnter your Choice ::");
+{
+ printf("\n====================================================================");
+ printf("\n");
+ printf("\t slot booking ");
+ printf("\n");
+ printf("\n====================================================================");
+ printf("\nPress <1> Insert allslots");
+ printf("\nPress <2> View All slots");
+ printf("\nPress <3> Find Slot ");
+ printf("\nPress <4> Book Slot");
+ printf("\nPress <5> View All Bookings");
+ printf("\nPress <0> Exit ");
+ printf("\nEnter your Choice ::");
  scanf("%d",&a);
      switch (a)
    {
@@ -42,23 +42,23 @@ void main()
       insert_details();
      break;
      case 2:
-     viewAll();
+      viewAll();
      break;
      case 3:
-     find();
+      find();
      break;
      case 4:
-  book_slot();
-  break;
-  case 5:
-  old_record();
-  break;
-  case 0:
-    exit(0);
-   break;
-    default:
-   printf("Wrong choice !");
-   break;
+      book_slot();
+     break;
+     case 5:
+      old_record();
+     break;
+     case 0:
+      exit(0);
+     break;
+      default:
+      printf("Wrong choice !");
+     break;
    }
  }while(a!=0);
 }
@@ -87,7 +87,7 @@ void insert_details()
      printf("\\n");
      fclose(fp);
 }
-void find()                                 //find details
+void find()                                 //find details of slots
 {
  struct book b;
  FILE *fp;
@@ -108,18 +108,18 @@ void find()                                 //find details
  if(strcmp(b.code,a) == 0)
 {
  printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);
- printf("\\n Record Found\\n");
- printf("\\n\\t\\tCode ::%s",b.code);
- printf("\\n\\t\\tslot name ::%s",b.name);
- printf("\\n\\t\\tslot date ::%s",b.date);
- printf("\\n\\t\\tprice  ::%d",b.cost);
+ printf("\n Record Found\n");
+ printf("\n\t\tCode ::%s",b.code);
+ printf("\n\t\tslot name ::%s",b.name);
+ printf("\n\t\tslot date ::%s",b.date);
+ printf("\n\t\tprice  ::%d",b.cost);
 break;
 }
 }
 }
-      fclose(fp);
+  fclose(fp);
 }
-void viewAll()
+ void viewAll()
 {
  char ch;
  FILE *fp;
@@ -128,7 +128,7 @@ void viewAll()
 {
  printf("file does not found !");
  exit(1);
-               }
+ }
  else
 {
  system("clear");
@@ -137,8 +137,7 @@ void viewAll()
 }
  fclose(fp);
 }
-//for slot booking 
-void book_slot()
+ void book_slot()                            //for booking slot
 {
  struct book b;
  FILE *fp;
@@ -147,8 +146,8 @@ void book_slot()
  char name[20];
  char a;                                    //used in display all slots
  char slot_code[20];                        //for searching
- // disply all slots by default for slot code
- fp = fopen("data.txt","r");
+ 
+ fp = fopen("data.txt","r");                // disply all slots by default for slot code
  if(fp == NULL)
 {
  printf("file does not found !");
@@ -196,13 +195,13 @@ printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);
  printf("\\n Total number of slots :");
  scanf("%d",&total_slot);
  total_amount = b.cost * total_slot;
- printf("\\n ***** ENJOY SLOT BOOKING ****\\n");
- printf("\\n\\t\\tname : %s",name);
- printf("\\n\\t\\tmobile Number : %d",mobile);
- printf("\\n\\t\\tslot name : %s",b.name);
- printf("\\n\\t\\tTotal slots : %d",total_slot);
- printf("\\n\\t\\tcost per slot : %d",b.cost);
- printf("\\n\\t\\tTotal Amount : %d",total_amount);
+ printf("\n ***** ENJOY SLOT BOOKING ****\\n");
+ printf("\n\t\tname : %s",name);
+ printf("\n\t\tmobile Number : %d",mobile);
+ printf("\n\t\tslot name : %s",b.name);
+ printf("\n\t\tTotal slots : %d",total_slot);
+ printf("\n\t\tcost per slot : %d",b.cost);
+ printf("\n\t\tTotal Amount : %d",total_amount);
  ufp=fopen("oldBookings.txt","a");
  if(ufp == NULL)
 {
@@ -217,8 +216,8 @@ printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);
  fclose(ufp);
  fclose(fp);
 }
-//for view all user Booking
-void old_record()
+
+void old_record()                 //for view all user Booking
 {
  char ch;
  FILE *fp;
@@ -240,7 +239,12 @@ void old_record()
  OUTPUT:          1)Enter Slot code ex:    12:00-1:00
                   2)Give name of slot:     India
                   3)Enter date:            14/06/20
-                  4)Price of booking :    2
+                  4)Price of booking :     2
+                  
+ Inserted data of slot booking will be stored in    :  data.txt
+ and Previous data of slot booking will be stored in:  OldBooking.txt
+ 
+ 
 /******************************************************************************
 
                           C program to print CALENDER OF GIVEN YEAR
@@ -288,8 +292,12 @@ int main()
     }
 }
 
+/******************************************************************************
+
  Python Code to find meeting time slots where all participants are available
  
+/******************************************************************************
+
 user_1 = ["4-16","18-24"]
 user_2 = ["2-14","17-24"]
 user_3 = ["6-8","12-20"]
@@ -319,3 +327,6 @@ def parseSlot(list_of_slots):
             k += 1
     return result
 }
+
+
+OUTPUT:   ['12-13', '13-14', '18-19', '19-20']
