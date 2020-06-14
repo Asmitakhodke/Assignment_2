@@ -179,20 +179,20 @@ break;
  if(strcmp(b.code,slot_code) == 0)
 {
 printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);
- printf("\\n Record Found\\n");
- printf("\\n\\t\\tCode ::%s",b.code);
- printf("\\n\\t\\tslot name ::%s",b.name);
- printf("\\n\\t\\tdate name ::%s",b.date);
- printf("\\n\\t\\tPrice ::%d",b.cost);
+ printf("\n Record Found\n");
+ printf("\n\t\tCode ::%s",b.code);
+ printf("\n\t\tslot name ::%s",b.name);
+ printf("\n\t\tdate name ::%s",b.date);
+ printf("\n\t\tPrice ::%d",b.cost);
 }
 }
 }
- printf("\\n* Fill Details  *");
- printf("\\n your name :");
+ printf("\n* Fill Details  *");
+ printf("\n your name :");
  scanf("%s",name);
- printf("\\n mobile number :");
+ printf("\n mobile number :");
  scanf("%d",&mobile);
- printf("\\n Total number of slots :");
+ printf("\n Total number of slots :");
  scanf("%d",&total_slot);
  total_amount = b.cost * total_slot;
  printf("\n ***** ENJOY SLOT BOOKING ****\\n");
@@ -210,9 +210,9 @@ printf("%s / %s / %s / %d\\n",b.code,b.name,b.date,b.cost);
  else
 {
  fprintf(ufp,"%s %d %d %d %s %d \\n",name,mobile,total_slot,total_amount,b.name,b.cost);
- printf("\\n Record insert Sucessfull to the old record file");
+ printf("\n Record insert Sucessfull to the old record file");
 }
- printf("\\n");
+ printf("\n");
  fclose(ufp);
  fclose(fp);
 }
@@ -251,7 +251,7 @@ void old_record()                 //for view all user Booking
 
  *******************************************************************************/
 #include <stdio.h>
-#include <stdlib.h>\par
+#include <stdlib.h>
 int frst_DayOfWeek(int yr)
 {
     int day;
